@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import { ReactNode, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import GroupIcon from "@mui/icons-material/Group"; //Пользователи
 import MapIcon from "@mui/icons-material/Map"; //Натальная карта
@@ -155,31 +156,48 @@ const DrawerComponent = ({ children }: { children: ReactNode }) => {
         <Divider />
         <List>
           {[
-            "Пользователи",
-            "Таро | Заявки",
-            "Нумерология | Заявки",
-            "Натальная карта | Заявки",
+            { users: "Пользователи" },
+            { taro: "Таро | Заявки" },
+            { numerologia: "Нумерология | Заявки" },
+            { natalnaya_carta: "Натальная карта | Заявки" },
           ].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{orders_icon[index]}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+            <ListItem key={Object.values(text)[0]} disablePadding>
+              <NavLink
+                to={Object.keys(text)[0]}
+                className={({ isActive }) =>
+                  ` w-full ${isActive ? "text-blue-600" : ""}`
+                }
+              >
+                <ListItemButton>
+                  <ListItemIcon>{orders_icon[index]}</ListItemIcon>
+                  <ListItemText primary={Object.values(text)[0]} />
+                </ListItemButton>
+              </NavLink>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {["Гороскопы", "Саблиминал", "Медитации", "Карта желаний"].map(
-            (text, index) => (
-              <ListItem key={text} disablePadding>
+          {[
+            { horoscopes: "Гороскопы" },
+            { "subliminal/general": "Саблиминал" },
+            { meditation: "Медитации" },
+            { wish_map: "Карта желаний" },
+          ].map((text, index) => (
+            <ListItem key={Object.values(text)[0]} disablePadding>
+              <NavLink
+                to={Object.keys(text)[0]}
+                className={({ isActive }) =>
+                  ` w-full ${isActive ? "text-blue-600" : ""}`
+                }
+              >
                 <ListItemButton>
                   <ListItemIcon>{content_icons[index]}</ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={Object.values(text)[0]} />
                 </ListItemButton>
-              </ListItem>
-            )
-          )}
+              </NavLink>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <Main open={open}>
